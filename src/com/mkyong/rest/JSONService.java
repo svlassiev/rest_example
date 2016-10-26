@@ -3,6 +3,7 @@ package com.mkyong.rest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.net.URLDecoder;
 import java.util.List;
 
 
@@ -47,6 +48,7 @@ public class JSONService {
 			@QueryParam("orderBy") List<String> orderBy) {
 		final String entity = "getUsers is called, from : " + from + ", to : " + to + ", orderBy" + orderBy.toString();
 		try { response.getWriter().print(entity); } catch (Throwable t) {} // Cross-site Scripting
+		System.out.println(entity);
 		return Response.status(200).entity(entity).build(); // Cross-site Scripting
 	}
 
@@ -54,8 +56,11 @@ public class JSONService {
 	@Path("/vulnqueryandheader")
 	public String printVulnAndHeader(@QueryParam("vulnparam") String from, @HeaderParam("vulnheader") String header, String param) {
 		try { response.getWriter().print(from); } catch (Throwable t) {} // Cross-site Scripting
+		System.out.println(from);
 		try { response.getWriter().print(header); } catch (Throwable t) {} // Cross-site Scripting
+		System.out.println(header);
 		try { response.getWriter().print(param); } catch (Throwable t) {} // Cross-site Scripting
+		System.out.println(param);
 		return from;
 	}
 
@@ -72,16 +77,23 @@ public class JSONService {
 		try { response.getWriter().print(from); } catch (Throwable t) {} // Cross-site Scripting
 		return from; // Cross-site Scripting
 	}
-//
-//    @GET
-//    @Encoded
-//    @Path("/vulnencodedquery")
-//    public String printVulnEncoded(@QueryParam("vuln") String from) {
-//        try { response.getWriter().print(from); } catch (Throwable t) {} // Cross-site Scripting
-//        return from; // Cross-site Scripting
-//    }
 
-	@GET
+    @GET
+    @Encoded
+    @Path("/vulnencodedquery")
+    public String printVulnEncoded(@QueryParam("vuln") String from) {
+        try { response.getWriter().print(URLDecoder.decode(from)); } catch (Throwable t) {} // Cross-site Scripting
+        return URLDecoder.decode(from); // Cross-site Scripting
+    }
+
+    @GET
+    @Path("/notvulnencodedquery")
+    public String printNotVulnEncoded(@Encoded @QueryParam("vuln") String from) {
+        try { response.getWriter().print(from); } catch (Throwable t) {}
+        return from;
+    }
+
+    @GET
 	@Path("/vulnheader")
 	public String printHeaderVuln(@HeaderParam("vuln") String header) {
 		try { response.getWriter().print(header); } catch (Throwable t) {} // Cross-site Scripting
