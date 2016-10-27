@@ -7,6 +7,26 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+
+
+<html>
+<body>
+<h1>JAX-RS @FormQuery Testing</h1>
+
+<form action="rest/json/metallica/add" method="post">
+  <p>
+    Name : <input type="text" name="name" />
+  </p>
+  <p>
+    Age : <input type="text" name="age" />
+  </p>
+  <input type="submit" value="Add User" />
+</form>
+
+</body>
+</html>
+
+
   <head>
     <title>$Title$</title>
   </head>

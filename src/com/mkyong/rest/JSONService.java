@@ -106,4 +106,13 @@ public class JSONService {
         try { response.getWriter().print(cookie); } catch (Throwable t) {} // Cross-site Scripting
         return cookie; // Cross-site Scripting
     }
+
+    @POST
+    @Path("/add")
+    public String addUser(
+            @FormParam("name") String name,
+            @FormParam("age") int age) {
+        try { response.getWriter().print(name); } catch (Throwable t) {} // Cross-site Scripting
+        return age + name; // Cross-site Scripting
+    }
 }
